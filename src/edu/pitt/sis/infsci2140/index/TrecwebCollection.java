@@ -23,3 +23,4 @@ public class TrecwebCollection implements DocumentCollection {
 	}
 	
 }
+//regx html method
