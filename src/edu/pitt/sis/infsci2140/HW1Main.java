@@ -34,6 +34,7 @@ public class HW1Main {
 			System.out.println("  args[2]: path of the stopwords list file.");
 			System.out.println("  args[3]: path of the output file.");
 			System.exit(0);
+			/////////
 		}
 		
 		String format = args[0];
