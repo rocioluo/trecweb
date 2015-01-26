@@ -33,10 +33,10 @@ public class TrectextCollection implements DocumentCollection {
             fis = new FileInputStream("D://pitt//data retrieval//docset//docset.trectext");
             reader = new BufferedReader(new InputStreamReader(fis));    
             
-            String line = reader.readLine();    
-            String tempkey;
-            String key = null;
-            String text = null;
+            String line = reader.readLine();    //read in line
+            String tempkey; //get the line <doc>
+            String key = null; //get key
+            String text = null;//get text
             
             
             while (line!= null){
@@ -57,13 +57,13 @@ public class TrectextCollection implements DocumentCollection {
             while (line!="<TEXT>"){
                 	line=reader.readLine();
                 	text=line;
-                	text+=text;
+                	text+=text; //append text
             }
                      map.put(key,text);
                      line=reader.readLine();
-                     line=reader.readLine();
+                     line=reader.readLine();//read another 2 lines so that it comes to new document
             }
-            Iterator iter = (Iterator) map.entrySet().iterator(); 
+            Iterator iter = (Iterator) map.entrySet().iterator(); //iterate map
            // Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
     	
     		

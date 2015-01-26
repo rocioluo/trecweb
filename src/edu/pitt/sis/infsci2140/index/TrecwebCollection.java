@@ -30,9 +30,9 @@ public class TrecwebCollection implements DocumentCollection {
 	            fis = new FileInputStream("D://pitt//data retrieval//docset//docset.trectweb");
 	            reader = new BufferedReader(new InputStreamReader(fis));    
 	            String line = reader.readLine(); 
-	            line=line.replaceAll("<script[^>]*?>[£Ü£Üs£Ü£ÜS]*?<£Ü£Ü/script>", "");
-	            line=line.replaceAll("<[£Ü£Üs]*?style[^>]*?>[£Ü£Üs£Ü£ÜS]*?<[£Ü£Üs]*?£Ü£Ü/[£Ü£Üs]*?style[£Ü£Üs]*?>", "");
-	            line=line.replaceAll("</?(?!/?p)[^>]*>", "");
+	            line=line.replaceAll("<script[^>]*?>[£Ü£Üs£Ü£ÜS]*?<£Ü£Ü/script>", "");//clear script
+	            line=line.replaceAll("<[£Ü£Üs]*?style[^>]*?>[£Ü£Üs£Ü£ÜS]*?<[£Ü£Üs]*?£Ü£Ü/[£Ü£Üs]*?style[£Ü£Üs]*?>", "");//clear style
+	            line=line.replaceAll("</?(?!/?p)[^>]*>", "");//clear all exept <p>
 	            String tempkey;
 	            String key = null;
 	            String text = null;
