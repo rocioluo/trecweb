@@ -10,6 +10,11 @@ public class TextTokenizer {
 	// YOU MUST IMPLEMENT THIS METHOD
 	public TextTokenizer( char[] texts ) {
 		// this constructor will tokenize the input texts (usually it is a char array for a whole document)
+
+		String a="1191111";
+		char[] bb=a.toCharArray();
+		String  aa=String.valueOf(bb);
+		String [] aaa=a.split("9");
 	}
 	
 	// YOU MUST IMPLEMENT THIS METHOD

@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
+import java.util.Map.Entry;
+import java.util.Iterator;
 
 
 /**
@@ -20,73 +17,50 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 public class TrectextCollection implements DocumentCollection {
 	
 	// YOU SHOULD IMPLEMENT THIS METHOD
-	 
-   
-	public TrectextCollection( FileInputStream instream ) throws IOException {
-		// This constructor should take an inputstream of the collection file as the input parameter.
-		  //reading file line by line in Java using BufferedReader       
-        FileInputStream fis = null;
-        BufferedReader reader = null;
-        Map<String,Object> map= new HashMap<String,Object>();
-      
-        try {
-            fis = new FileInputStream("D://pitt//data retrieval//docset//docset.trectext");
-            reader = new BufferedReader(new InputStreamReader(fis));    
-            
-            String line = reader.readLine();    //read in line
-            String tempkey; //get the line <doc>
-            String key = null; //get key
-            String text = null;//get text
-            
-            
-            while (line!= null){
-            	
-            line=reader.readLine();
-            
-                while (line.equals("<DOC>")){	                	
-            	line=reader.readLine();
-            	tempkey=line;
-                key= tempkey.substring(8,15);                   
-            break;   
-            }
-                
-            while (line!="<TEXT>"){
-            	line=reader.readLine();
-            }
-            
-            while (line!="<TEXT>"){
-                	line=reader.readLine();
-                	text=line;
-                	text+=text; //append text
-            }
-                     map.put(key,text);
-                     line=reader.readLine();
-                     line=reader.readLine();//read another 2 lines so that it comes to new document
-            }
-            Iterator iter = (Iterator) map.entrySet().iterator(); //iterate map
-           // Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
-    	
-    		
-            
-        }
 
-                
-          
-          
-        catch (FileNotFoundException ex) {
-            Logger.getLogger(TrectextCollection.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(TrectextCollection.class.getName()).log(Level.SEVERE, null, ex);
-          
-        } 
-        finally {
-            try {
-                reader.close();
-            } catch (IOException ex) {
-                Logger.getLogger(TrectextCollection.class.getName()).log(Level.SEVERE, null, ex);
+	private Iterator<Entry<String, Object>> iter;
+	
+	public TrectextCollection( FileInputStream instream ) throws IOException {
+	        Map<String,Object> map= new HashMap<String,Object>();
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(instream));    
+            
+            String line;    //read in line
+            String tempkey; //get the line <doc>
+            String key = ""; //get key
+            String text ="";//get text
+            while ((line= reader.readLine()) != null){
+            	int flag=0;
+	            while (!line.equals("<DOC>")){
+	            	if((line= reader.readLine()) == null)
+	            	{
+	            		flag=1;
+	            		break;
+	            	}
+	            	line=reader.readLine();
+	            }
+	            if(flag==1)
+	            {
+	            	break;
+	            }
+	            while (line.equals("<DOC>"))
+	            {	   
+	            	line=reader.readLine();
+	            	tempkey=line;
+		            key= tempkey.substring(8,22);//docno
+		            //break;   
+	            } 
+	            while (!line.equals("<TEXT>")){
+	            	line=reader.readLine();
+	            }
+	            line=reader.readLine();
+	            while (!line.equals("</TEXT>")){
+	            	text+=line; 
+	            	line=reader.readLine();
+	            }
+	            map.put(key,text.toCharArray());
+	            text="";
             }
-        
-        }
+            iter = (Iterator) map.entrySet().iterator(); //iterate map
 	}
 	
 	// YOU SHOULD IMPLEMENT THIS METHOD
@@ -94,16 +68,13 @@ public class TrectextCollection implements DocumentCollection {
 		
 		// Read the definition of this method from edu.pitt.sis.infsci2140.index.DocumentCollection interface 
 		// and follow the assignment instructions to implement this method.
-		Map map2 = new HashMap(); 
+		Map<String,Object> map2 = new HashMap<String,Object>(); 
 		if(iter.hasNext()) { 
- 		    Map.Entry entry = (Map.Entry) iter.next(); 
- 		    Object key = entry.getKey(); 
- 		    Object val = entry.getValue(); 
- 		    //text:stringto char
-		
-		
+			Entry<String, Object> entry = (Entry<String, Object>) iter.next();
+			map2.put("DOCNO", entry.getKey());
+			map2.put("CONTENT", entry.getValue());
+			return map2;
+		}
 		return null;
 	}
-	
-}
 }
