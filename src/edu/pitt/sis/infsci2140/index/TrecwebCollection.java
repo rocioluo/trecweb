@@ -26,42 +26,53 @@ public class TrecwebCollection implements DocumentCollection {
 	            String key = ""; //get key
 	            String text ="";//get text
 	            while ((line= reader.readLine()) != null){
-	            	int flag=0;
-		            while (!line.equals("<DOC>")){
-		            	if((line= reader.readLine()) == null)
-		            	{
-		            		flag=1;
-		            		break;
-		            	}
-		            	line=reader.readLine();
-		            }
-		            if(flag==1)
+	            	System.out.println(line);
+	            	boolean flag=true;
+		           // while (!line.equals("<DOC>")){
+		            //	if((line= reader.readLine()) == null)
+		            	//{
+		            		//flag=true;
+		            	//}
+		            	//line=reader.readLine();
+		           // }
+		           // if(flag=false)
+		            //{
+		            	//break;
+		            //}
+		         if(line.equals("<DOC>"))
 		            {
-		            	break;
-		            }
-		            while (line.equals("<DOC>"))
-		            {	   
+		        	    flag=true;
 		            	line=reader.readLine();
-		            	line.replaceAll("<script[^>]*?>[£Ü£Üs£Ü£ÜS]*?<£Ü£Ü/script>", "");
-		            	line.replaceAll("<[£Ü£Üs]*?style[^>]*?>[£Ü£Üs£Ü£ÜS]*?<[£Ü£Üs]*?£Ü£Ü/[£Ü£Üs]*?style[£Ü£Üs]*?>", "");
-		            	line.replaceAll("</?(?!/?p)[^>]*>", "");//replace script, style and others exept p
 		            	tempkey=line;
-			            key= tempkey.substring(8,22);//docno
+			            key= tempkey.substring(7,19);//docno
+			            if(!line.equals("</DOC>"))
+			            {
+		            	  text+=line; 
+		            	  line=reader.readLine();
+		            	}
+//		            	line = line.replaceAll("<script[^>]*?>[£Ü£Üs£Ü£ÜS]*?<£Ü£Ü/script>", "");
+//		            	line = line.replaceAll("<[£Ü£Üs]*?style[^>]*?>[£Ü£Üs£Ü£ÜS]*?<[£Ü£Üs]*?£Ü£Ü/[£Ü£Üs]*?style[£Ü£Üs]*?>", "");
+//		            	line = line.replaceAll("</?(?!/?p)[^>]*>", "");//replace script, style and others exept p
+		            	
 			            //break;   
-		            } 
-		            while (!line.equals("<P>")){
-		            	line=reader.readLine();
 		            }
-		            line=reader.readLine();
-		            while (!line.equals("</P>")){
-		            	text+=line; 
-		            	line=reader.readLine();
-		            }
+//		         else
+//		         {
+//		        	 flag=false;
+//		        	 break;	        	 
+//		         }
+//		            while (!line.equals("<P>")){
+//		            	line=reader.readLine();
+//		            }
+//		            line=reader.readLine();
+//		            while (!line.equals("</P>")){
+//		            	text+=line; 
+//		            	line=reader.readLine();
+//		            }
 		            map.put(key,text.toCharArray());
 		            text="";
 	            }
-	            iter2 = (Iterator) map.entrySet().iterator(); //iterate map
-	
+	            iter2 = (Iterator) map.entrySet().iterator(); //iterate map	
 }
 	// YOU SHOULD IMPLEMENT THIS METHOD
 	public Map<String, Object> nextDocument() throws IOException {
@@ -77,4 +88,14 @@ public class TrecwebCollection implements DocumentCollection {
 		return null;
 	}
 	
+	
+	public static void main(String args[]) throws IOException {
+		String path_input = "data/docset.trecweb";
+		TrecwebCollection tc = new TrecwebCollection(new FileInputStream(path_input));
+		System.out.println(tc.nextDocument().get("DOCNO"));
+		System.out.println(tc.nextDocument().get("DOCNO"));
+		System.out.println(tc.nextDocument().get("DOCNO"));
+		System.out.println(tc.nextDocument().get("DOCNO"));
+		
+	}
 }

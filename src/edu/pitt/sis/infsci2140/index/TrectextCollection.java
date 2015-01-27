@@ -1,6 +1,7 @@
 package edu.pitt.sis.infsci2140.index;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +15,8 @@ import java.util.Iterator;
  * This is for INFSCI 2140 in 2015
  *
  */
-public class TrectextCollection implements DocumentCollection {
-	
+public class TrectextCollection implements DocumentCollection {	
 	// YOU SHOULD IMPLEMENT THIS METHOD
-
 	private Iterator<Entry<String, Object>> iter;
 	
 	public TrectextCollection( FileInputStream instream ) throws IOException {
@@ -76,5 +75,15 @@ public class TrectextCollection implements DocumentCollection {
 			return map2;
 		}
 		return null;
+	}
+	
+	//debug for trectext
+	public static void main(String args[]) throws IOException {
+		String path_input = "data/docset.trectext";
+		TrectextCollection tc = new TrectextCollection(new FileInputStream(path_input));
+		System.out.println(tc.nextDocument().get("DOCNO"));
+		System.out.println(tc.nextDocument().get("DOCNO"));
+		System.out.println(tc.nextDocument().get("DOCNO"));
+		
 	}
 }

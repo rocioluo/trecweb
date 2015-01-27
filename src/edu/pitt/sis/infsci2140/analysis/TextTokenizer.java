@@ -7,19 +7,20 @@ package edu.pitt.sis.infsci2140.analysis;
  */
 public class TextTokenizer {
 	
+	public String[]words;
 	// YOU MUST IMPLEMENT THIS METHOD
 	public TextTokenizer( char[] texts ) {
 		// this constructor will tokenize the input texts (usually it is a char array for a whole document)
-
-		String a="1191111";
-		char[] bb=a.toCharArray();
-		String  aa=String.valueOf(bb);
-		String [] aaa=a.split("9");
+		for(int i=0;i <texts.length;i++){//get all text
+		String temp=String.valueOf(texts);//get value
+		words=temp.split(" ");//split value
+		}
 	}
 	
 	// YOU MUST IMPLEMENT THIS METHOD
 	public char[] nextWord() {
 		// read and return the next word of the document; or return null if it is the end of the document
+		
 		return null;
 	}
 	
