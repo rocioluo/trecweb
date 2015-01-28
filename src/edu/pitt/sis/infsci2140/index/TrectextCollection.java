@@ -1,7 +1,6 @@
 package edu.pitt.sis.infsci2140.index;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,23 +66,23 @@ public class TrectextCollection implements DocumentCollection {
 		
 		// Read the definition of this method from edu.pitt.sis.infsci2140.index.DocumentCollection interface 
 		// and follow the assignment instructions to implement this method.
-		Map<String,Object> map2 = new HashMap<String,Object>(); 
+		Map<String,Object> doc = new HashMap<String,Object>(); 
 		if(iter.hasNext()) { 
 			Entry<String, Object> entry = (Entry<String, Object>) iter.next();
-			map2.put("DOCNO", entry.getKey());
-			map2.put("CONTENT", entry.getValue());
-			return map2;
+			doc.put("DOCNO", entry.getKey());
+			doc.put("CONTENT", entry.getValue());
+			return doc;
 		}
 		return null;
 	}
 	
 	//debug for trectext
-	public static void main(String args[]) throws IOException {
-		String path_input = "data/docset.trectext";
-		TrectextCollection tc = new TrectextCollection(new FileInputStream(path_input));
-		System.out.println(tc.nextDocument().get("DOCNO"));
-		System.out.println(tc.nextDocument().get("DOCNO"));
-		System.out.println(tc.nextDocument().get("DOCNO"));
-		
-	}
+//	public static void main(String args[]) throws IOException {
+//		String path_input = "data/docset.trectext";
+//		TrectextCollection tc = new TrectextCollection(new FileInputStream(path_input));
+//		System.out.println(tc.nextDocument().get("DOCNO"));
+//		System.out.println(tc.nextDocument().get("DOCNO"));
+//		System.out.println(tc.nextDocument().get("DOCNO"));
+//		
+//	}
 }

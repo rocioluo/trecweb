@@ -4,27 +4,25 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 
 /**
  * This is for INFSCI 2140 in 2015
  * 
  */
 public class StopwordsRemover {
-	char[] stopwords;
+	private HashSet<String> hashset = null;
 	// YOU MUST IMPLEMENT THIS METHOD
 	public StopwordsRemover( FileInputStream instream ) throws IOException {
 		// load and store the stop words from the fileinputstream with appropriate data structure
 		// that you believe is suitable for matching stop words.
 		String line;
-		Map<String,Object> map= new HashMap<String,Object>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(instream));    
-        while ((line= reader.readLine()) != null){
+       hashset=new HashSet<String>();
+        while ((line= reader.readLine()) != null){            	
+            	hashset.add(line);
             	line=reader.readLine();
-            	stopwords=line.toCharArray();
-            	//System.out.println(stopwords);
-        		//String  aa=String.valueOf(stopwords);
+            	//System.out.println(hashset);
         }
 	}
 	
@@ -32,17 +30,11 @@ public class StopwordsRemover {
 	public boolean isStopword( char[]word ) {
 		// return true if the input word is a stop word, or false if not
 		//equal
-		for(int i=0;i<stopwords.length;i++){
-				if (word.equals(stopwords[i]))
-				{
+		String stopword= new String(word);
+		if(hashset.contains(stopword))		
 			    	return true;
-				}
-		
 			return false;
-			}
-		return false;
-		    
-		
+			
 	}
 
 }
